@@ -11,3 +11,18 @@ class Account:
         if accountType == "student":
             self.balance += (balance * 0.5)
         self.accountNum = accountNum
+
+    def getName(self):
+        return self.cName
+
+    def getEmail(self):
+        return self.cEmail
+
+    def getAccountNumber(self):
+        return self.accountNum
+
+    def getAccountType(self):
+        return self.accountType
+
+    def getBalance(self):
+        return self.balance

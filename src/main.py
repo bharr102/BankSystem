@@ -73,4 +73,23 @@ def checkEmail(email):
 
     return valid
 
+
+def login():
+    print()
+
+
+def loadFile():
+    print()
+
+
+def saveFile(accounts):
+    cusFileName = input("Please enter the file name you would like to save to: ")
+
+    sourceFile = open(cusFileName, 'w')
+
+    for account in accounts:
+        sourceFile.write(account.getName() + ";" + account.getEmail() + ";" + str(
+            account.getAccountNumber()) + ";" + account.getAccountType() + ";" + account.getBalance())
+
+
 run()

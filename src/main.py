@@ -6,13 +6,16 @@ import re
 def run():
   customers = []
   c1 = createCustomer()
+  c2 = createCustomer()
   customers.append(c1.getName())
   print(customers)
   x = re.findall("[0-9]{2}", str(c1.getAge()))
   print(x)
   account1 = createAccount(c1)
+  a2 = createAccount(c2)
   accounts = [account1]
-
+  accounts.append(a2)
+  saveFile(accounts)
 
 
 
@@ -88,8 +91,8 @@ def saveFile(accounts):
     sourceFile = open(cusFileName, 'w')
 
     for account in accounts:
-        sourceFile.write(account.getName() + ";" + account.getEmail() + ";" + str(
-            account.getAccountNumber()) + ";" + account.getAccountType() + ";" + account.getBalance())
+        sourceFile.write(account.getName() + ";" + account.getEmail() + ";" +
+        str(account.getAccountNumber()) + ";" + account.getAccountType() + ";" + str(account.getBalance()) + '\n')
 
 
 run()

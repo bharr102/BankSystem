@@ -82,7 +82,12 @@ def login():
 
 
 def loadFile():
-    print()
+    infile = input("Please enter the  data files you would like to load:")
+    sourceFile = open(infile, 'r')
+    lines = sourceFile.readlines()
+
+    for line in lines:
+
 
 
 def saveFile(accounts):

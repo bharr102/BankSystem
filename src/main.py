@@ -6,7 +6,7 @@ import re
 def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
-  login(accounts)
+  activeAccount = login(accounts)
 
   print(accounts[0].getName(),accounts[1].getName())
   customers = []
@@ -63,16 +63,16 @@ def login(accounts):
             choice = input ("Email: " + account.getEmail() + "\n Name: " + account.getName() + "\n is this your account (Y/N): ")
             if choice == 'Y' or choice == 'y':
                 flag = True
-                account = foundAccount
-                break
+                foundAccount = account
+
 
 # if account exists in the list then prompts passcode
     if flag == True:
-        while (attempts < 3 and (pin == foundAccount.getPin()) == False):
+        while attempts < 3 and pin != foundAccount.getPin():
             pin = input("Please enter your 4 digit passcode: ")
             if (pin == foundAccount.getPin()) == False:
                      attempts +=1
-                     print("Incorrect Pin you have " + (3 - attempts) + " left" )
+                     print("Incorrect Pin you have " + str(3 - attempts) + " left" )
             else:
                 return foundAccount
 

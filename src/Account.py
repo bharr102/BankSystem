@@ -11,6 +11,7 @@ class Account:
         if accountType == "student":
             self.balance += (balance * 0.5)
         self.accountNum = accountNum
+        self.pin = pin
 
     def getName(self):
         return self.cName

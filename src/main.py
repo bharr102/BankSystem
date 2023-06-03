@@ -4,6 +4,10 @@ import random
 import re
 
 def run():
+
+  accounts = loadAccounts()
+  print(accounts[0].getName(),accounts[1].getName())
+  '''
   customers = []
   c1 = createCustomer()
   c2 = createCustomer()
@@ -17,6 +21,7 @@ def run():
   accounts.append(a2)
   saveFile(accounts)
 
+'''
 
 
 # this method prompts inpput from customer to create a new customer instance
@@ -80,15 +85,17 @@ def checkEmail(email):
 def login():
     print()
 
-
-def loadFile():
+#This function loads the program with bank  accounts from a specified file
+def loadAccounts():
     infile = input("Please enter the  data files you would like to load:")
     sourceFile = open(infile, 'r')
     lines = sourceFile.readlines()
-
+    accounts = []
     for line in lines:
+        attributes = line.split()
+        accounts.append(Account(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4]))
 
-
+    return accounts
 
 def saveFile(accounts):
     cusFileName = input("Please enter the file name you would like to save to: ")
@@ -96,8 +103,8 @@ def saveFile(accounts):
     sourceFile = open(cusFileName, 'w')
 
     for account in accounts:
-        sourceFile.write(account.getName() + ";" + account.getEmail() + ";" +
-        str(account.getAccountNumber()) + ";" + account.getAccountType() + ";" + str(account.getBalance()) + '\n')
+        sourceFile.write(account.getName() + " " + account.getEmail() + " " +
+        str(account.getAccountNumber()) + " " + account.getAccountType() + " " + str(account.getBalance()) + '\n')
 
 
 run()

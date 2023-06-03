@@ -3,7 +3,7 @@ import random
 
 class Account:
 
-    def __init__(self, cName, cEmail, accountType, balance, accountNum=random.randint(1000, 9999)):
+    def __init__(self, cName, cEmail, accountType, balance,pin = 0000, accountNum=random.randint(1000, 9999)):
         self.cName = cName
         self.cEmail = cEmail
         self.accountType = accountType
@@ -26,3 +26,6 @@ class Account:
 
     def getBalance(self):
         return self.balance
+
+    def getPin(self):
+        return self.pin

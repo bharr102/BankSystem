@@ -4,9 +4,10 @@ import random
 import re
 
 def run():
-  loadCustomers("customers.txt")
-  loadAccounts("accounts.txt")
-  accounts = loadAccounts()
+  customers = loadCustomers("customers.txt")
+  accounts = loadAccounts("accounts.txt")
+  login(accounts)
+
   print(accounts[0].getName(),accounts[1].getName())
   customers = []
   '''
@@ -24,9 +25,9 @@ def run():
 
 '''
   saveAccounts(accounts)
-  saveCustomers(customers)
+  # saveCustomers(customers)
 
-# this method prompts inpput from customer to create a new customer instance
+# this method prompts input from customer to create a new customer instance
 def createCustomer():
   name = input("Please enter your name: ")
   age = input("Please enter your age: ")
@@ -45,11 +46,36 @@ def createCustomer():
 def lowBalance():
     print()
 def login(accounts):
-    name = input("Please enter your name")
-    email = input("Please enter your email")
+    #These variables are used to search through list of accounts and match name/email
+    email = input("Please enter your email: ")
+    name = input("Please enter your name: ")
 
-    if name.lower() in accounts.getName().lower() and email.lower() in accounts.getEmail().lower():
-        passwd = input (email + ":\nPlease enter your password")
+    #carries the value of yes or no choice
+    choice = ""
+    flag = False
+    foundAccount = None
+    attempts = 0
+    pin = 0
+
+# Goes through all accounts and checks if name or email matches
+    for account in accounts:
+        if name.lower() == account.getName().lower() or email.lower() == account.getEmail().lower():
+            choice = input ("Email: " + account.getEmail() + "\n Name: " + account.getName() + "\n is this your account (Y/N): ")
+            if choice == 'Y' or choice == 'y':
+                flag = True
+                account = foundAccount
+                break
+
+# if account exists in the list then prompts passcode
+    if flag == True:
+        while (attempts < 3 and (pin == foundAccount.getPin()) == False):
+            pin = input("Please enter your 4 digit passcode: ")
+            if (pin == foundAccount.getPin()) == False:
+                     attempts +=1
+                     print("Incorrect Pin you have " + (3 - attempts) + " left" )
+            else:
+                return foundAccount
+
 
 
     print()
@@ -81,11 +107,11 @@ def createAccount(customer):
         else:
             flag = True
 
-        a1 = Account(customer.getName(), customer.getEmail(), customer.getOccupation(), balance)
+        a1 = Account(customer.getName(), customer.getEmail(), customer.getOccupation(), balance,pin)
 
     return a1
 
-# this function takes in an email address and returns true if the email address meets the required format
+# helper function that takes in an email address and returns true if the email address meets the required format
 def checkEmail(email):
     # creating regular experesion to define a correct email address
     emailSequence = "^[a-z0-9]+@[a-z]+\.(ca|com)$"
@@ -113,7 +139,7 @@ def loadAccounts(infile):
     accounts = []
     for line in lines:
         attributes = line.split()
-        accounts.append(Account(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4]))
+        accounts.append(Account(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5]))
 
     return accounts
 # This function loads data from a file and creates and returns a list of customers
@@ -135,8 +161,8 @@ def saveAccounts(accounts):
     sourceFile = open(cusFileName, 'w')
 
     for account in accounts:
-        sourceFile.write(account.getName() + " " + account.getEmail() + " " +
-        str(account.getAccountNumber()) + " " + account.getAccountType() + " " + str(account.getBalance()) + '\n')
+        sourceFile.write(account.getName() + " " + account.getEmail() + " " + account.getAccountType() + " " +
+        str(account.getBalance()) + " " + str(account.getPin()) + " " + str(account.getAccountNumber()) + '\n')
 
 # This method takes in a list of customers then formats and saves the list into a file
 def saveCustomers(customers):

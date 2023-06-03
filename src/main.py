@@ -7,11 +7,12 @@ def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
   activeAccount = login(accounts)
+  checkBalance(activeAccount)
 
-  print(accounts[0].getName(),accounts[1].getName())
-  customers = []
+
+
   '''
-  c1 = createCustomer()
+  
   c2 = createCustomer()
   customers.append(c1.getName())
   print(customers)
@@ -25,7 +26,7 @@ def run():
 
 '''
   saveAccounts(accounts)
-  # saveCustomers(customers)
+  saveCustomers(customers)
 
 # this method prompts input from customer to create a new customer instance
 def createCustomer():
@@ -80,11 +81,26 @@ def login(accounts):
 
     print()
 
-   #This method sends a
-def transferFunds():
+   #This method sends money from the logged in account to another account in the system
+"""
+
+   :param account: 
+   :return: 
+   """
+def transferFunds(account):
+   """
+    fail cases:
+    if the account doesnt have enough funds to transfer
+    if the recipient account does not exist in the database
+    if the sender doesnt confirm the transfer
+
+    Sucess Conditions:
+    The recepient account exiwsts, the active account has enough funds,
+   """
+
     print()
-def checkBalance():
-    print()
+def checkBalance(account):
+    print(f"Balance: ${account.getBalance()}")
 
 
 # This method takes in a customer and creates an account based on the occupation and age of customer
@@ -156,9 +172,8 @@ def loadCustomers(infile):
 
 # This method takes in a list of accounts, then formats and saves the list into a file
 def saveAccounts(accounts):
-    cusFileName = input("Please enter the file name you would like to save to: ")
 
-    sourceFile = open(cusFileName, 'w')
+    sourceFile = open("accounts.txt", 'w')
 
     for account in accounts:
         sourceFile.write(account.getName() + " " + account.getEmail() + " " + account.getAccountType() + " " +
@@ -166,12 +181,12 @@ def saveAccounts(accounts):
 
 # This method takes in a list of customers then formats and saves the list into a file
 def saveCustomers(customers):
-    cusFileName = input("Please enter the file name you would like to save to: ")
 
-    sourceFile = open(cusFileName, 'w')
+
+    sourceFile = open("customers.txt", 'w')
 
     for customer in customers:
-        sourceFile.write(customer.getName() + " " + customer.getAge() + " " +
+        sourceFile.write(customer.getName() + " " + str(customer.getAge()) + " " +
         str(customer.getEmail()) + " " + customer.getOccupation() + '\n')
 
 run()

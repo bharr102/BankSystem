@@ -4,11 +4,12 @@ import random
 import re
 
 def run():
-
+  loadCustomers("customers.txt")
+  loadAccounts("accounts.txt")
   accounts = loadAccounts()
   print(accounts[0].getName(),accounts[1].getName())
-  '''
   customers = []
+  '''
   c1 = createCustomer()
   c2 = createCustomer()
   customers.append(c1.getName())
@@ -19,10 +20,11 @@ def run():
   a2 = createAccount(c2)
   accounts = [account1]
   accounts.append(a2)
-  saveFile(accounts)
+ 
 
 '''
-
+  saveAccounts(accounts)
+  saveCustomers(customers)
 
 # this method prompts inpput from customer to create a new customer instance
 def createCustomer():
@@ -38,6 +40,25 @@ def createCustomer():
   occupation = occupation.lower()
   c1 = Customer(name, age, email, occupation)
   return c1
+
+# Checks balance whenever first logged in and prints out a message if balance is low *should work with the login function
+def lowBalance():
+    print()
+def login(accounts):
+    name = input("Please enter your name")
+    email = input("Please enter your email")
+
+    if name.lower() in accounts.getName().lower() and email.lower() in accounts.getEmail().lower():
+        passwd = input (email + ":\nPlease enter your password")
+
+
+    print()
+
+   #This method sends a
+def transferFunds():
+    print()
+def checkBalance():
+    print()
 
 
 # This method takes in a customer and creates an account based on the occupation and age of customer
@@ -82,12 +103,11 @@ def checkEmail(email):
     return valid
 
 
-def login():
-    print()
+
 
 #This function loads the program with bank  accounts from a specified file
-def loadAccounts():
-    infile = input("Please enter the  data files you would like to load:")
+def loadAccounts(infile):
+    #infile = input("Please enter the  data files you would like to load:")
     sourceFile = open(infile, 'r')
     lines = sourceFile.readlines()
     accounts = []
@@ -96,8 +116,20 @@ def loadAccounts():
         accounts.append(Account(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4]))
 
     return accounts
+# This function loads data from a file and creates and returns a list of customers
+def loadCustomers(infile):
+    #infile = input("Please enter the  data files you would like to load:")
+    sourceFile = open(infile, 'r')
+    lines = sourceFile.readlines()
+    customers = []
+    for line in lines:
+        attributes = line.split()
+        customers.append(Customer(attributes[0],attributes[1],attributes[2],attributes[3]))
 
-def saveFile(accounts):
+    return customers
+
+# This method takes in a list of accounts, then formats and saves the list into a file
+def saveAccounts(accounts):
     cusFileName = input("Please enter the file name you would like to save to: ")
 
     sourceFile = open(cusFileName, 'w')
@@ -106,5 +138,14 @@ def saveFile(accounts):
         sourceFile.write(account.getName() + " " + account.getEmail() + " " +
         str(account.getAccountNumber()) + " " + account.getAccountType() + " " + str(account.getBalance()) + '\n')
 
+# This method takes in a list of customers then formats and saves the list into a file
+def saveCustomers(customers):
+    cusFileName = input("Please enter the file name you would like to save to: ")
+
+    sourceFile = open(cusFileName, 'w')
+
+    for customer in customers:
+        sourceFile.write(customer.getName() + " " + customer.getAge() + " " +
+        str(customer.getEmail()) + " " + customer.getOccupation() + '\n')
 
 run()

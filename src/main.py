@@ -44,7 +44,9 @@ def createCustomer():
   return c1
 
 # Checks balance whenever first logged in and prints out a message if balance is low *should work with the login function
-def lowBalance():
+def lowBalance(account):
+    if int(account.getBalance()) < 100:
+        print ("\nLow Balance \nAccounts balance is low, deposit money to avoid potential overdraft charges")
     print()
 def login(accounts):
     #These variables are used to search through list of accounts and match name/email
@@ -75,6 +77,7 @@ def login(accounts):
                      attempts +=1
                      print("Incorrect Pin you have " + str(3 - attempts) + " left" )
             else:
+                lowBalance(foundAccount)
                 return foundAccount
 
 
@@ -97,8 +100,7 @@ def transferFunds(account):
     Sucess Conditions:
     The recepient account exiwsts, the active account has enough funds,
    """
-
-    print()
+   print()
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")
 

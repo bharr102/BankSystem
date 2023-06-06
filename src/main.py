@@ -8,7 +8,7 @@ def run():
   accounts = loadAccounts("accounts.txt")
   activeAccount = login(accounts)
   checkBalance(activeAccount)
-
+  transferFunds(activeAccount, accounts)
 
 
   '''
@@ -90,7 +90,7 @@ def login(accounts):
    :param account: 
    :return: 
    """
-def transferFunds(transferAccount, accounts):
+def transferFunds(transferor, accounts):
    """
     fail cases:
     if the account doesnt have enough funds to transfer
@@ -100,25 +100,32 @@ def transferFunds(transferAccount, accounts):
     Sucess Conditions:
     The recepient account exiwsts, the active account has enough funds,
    """
-   transferAmount
+   transferAmount = 0
    flag = False
    transferEmail = input("Please enter the email of the transfer account: ")
    tranferee = None
+
    for account in accounts:
        if transferEmail.lower() == account.getEmail().lower():
            transferee = account
            flag = True
            break
+       else:
+           flag = False
 
     if flag == True:
         print("Account Details ")
         option = input(f"Name:{transferee.getName().capitalize()} Email: {transferee.getEmail()} \nIs this the correct account (Y/N)")
         if option.lower() == 'y':
             transferAmount = input("Please enter the amount you would like to send:")
-           if transferAmount >= transferAccount.getBalance():
-               transferee
+            if transferAmount >= transferor.getBalance():
+               transferor.setBalance(transferor.getBalance() - transferAmount)
+               transferee.setBalance(tranferee.getBalance() + transferAmount)
 
-   print()
+    if option.lower != 'y':
+        print("Thank You Please Come Again")
+    else:
+        print(f"Transfer Details:\nAmount Transfered:{transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\n New Balance: {transferor.getBalance()}")
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")
 

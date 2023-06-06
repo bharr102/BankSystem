@@ -30,7 +30,7 @@ def run():
 
 # this method prompts input from customer to create a new customer instance
 def createCustomer():
-  name = input("Please enter your name: ")
+  name = input("Please enter your name: ").capitalize()
   age = input("Please enter your age: ")
   age = int(age)
   #Checking if email is a valid address
@@ -90,7 +90,7 @@ def login(accounts):
    :param account: 
    :return: 
    """
-def transferFunds(account):
+def transferFunds(transferAccount, accounts):
    """
     fail cases:
     if the account doesnt have enough funds to transfer
@@ -100,6 +100,24 @@ def transferFunds(account):
     Sucess Conditions:
     The recepient account exiwsts, the active account has enough funds,
    """
+   transferAmount
+   flag = False
+   transferEmail = input("Please enter the email of the transfer account: ")
+   tranferee = None
+   for account in accounts:
+       if transferEmail.lower() == account.getEmail().lower():
+           transferee = account
+           flag = True
+           break
+
+    if flag == True:
+        print("Account Details ")
+        option = input(f"Name:{transferee.getName().capitalize()} Email: {transferee.getEmail()} \nIs this the correct account (Y/N)")
+        if option.lower() == 'y':
+            transferAmount = input("Please enter the amount you would like to send:")
+           if transferAmount >= transferAccount.getBalance():
+               transferee
+
    print()
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")

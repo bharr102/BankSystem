@@ -30,3 +30,12 @@ class Account:
 
     def getPin(self):
         return self.pin
+
+    def setName(self, name):
+        self.name = name
+
+    def setEmail(self, email):
+        self.email = email
+
+    def setBalance(self, balance):
+        self.balance = balance

@@ -45,7 +45,7 @@ def createCustomer():
 
 # Checks balance whenever first logged in and prints out a message if balance is low *should work with the login function
 def lowBalance(account):
-    if int(account.getBalance()) < 100:
+    if float(account.getBalance()) < 100:
         print ("\nLow Balance \nAccounts balance is low, deposit money to avoid potential overdraft charges")
     print()
 def login(accounts):
@@ -116,7 +116,7 @@ def transferFunds(transferor, accounts):
         option = input(f"Name:{transferee.getName().capitalize()}\nEmail: {transferee.getEmail()}\n\nIs this the correct account (Y/N)")
         if option.lower() == 'y':
             transferAmount = input("Please enter the amount you would like to send:")
-            transferAmount = int(transferAmount)
+            transferAmount = float(transferAmount)
             if transferAmount >= transferor.getBalance():
                transferor.setBalance(transferor.getBalance() - transferAmount)
                transferee.setBalance(tranferee.getBalance() + transferAmount)
@@ -125,7 +125,7 @@ def transferFunds(transferor, accounts):
         print("Thank You Please Come Again")
 
    else:
-        print(f"Transfer Details:\nAmount Transfered:{transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\n New Balance: {transferor.getBalance()}")
+        print(f"Transfer Details:\nAmount Transfered:${transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\nNew Balance: ${transferor.getBalance()}")
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")
 
@@ -139,7 +139,7 @@ def createAccount(customer):
     print("\nWe add 50 % of initial balance deposit onto  new student account")
 
     balance = input("Please enter your first account deposit: ")
-    balance = int(balance)
+    balance = float(balance)
 
     while (flag == False):
         pin = input("Please enter a four digit passcode: ")
@@ -182,7 +182,7 @@ def loadAccounts(infile):
     accounts = []
     for line in lines:
         attributes = line.split()
-        accounts.append(Account(attributes[0],attributes[1],attributes[2], int(attributes[3]),attributes[4],attributes[5]))
+        accounts.append(Account(attributes[0],attributes[1],attributes[2], float(attributes[3]),attributes[4],attributes[5]))
 
     return accounts
 # This function loads data from a file and creates and returns a list of customers

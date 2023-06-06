@@ -7,7 +7,7 @@ class Account:
         self.cName = cName
         self.cEmail = cEmail
         self.accountType = accountType
-        self.balance = balance
+        self.balance = float(balance)
         if accountType == "student":
             self.balance += (balance * 0.5)
         self.accountNum = accountNum

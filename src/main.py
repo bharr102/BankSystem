@@ -104,27 +104,27 @@ def transferFunds(transferor, accounts):
    flag = False
    transferEmail = input("Please enter the email of the transfer account: ")
    tranferee = None
-
+   option = ''
    for account in accounts:
        if transferEmail.lower() == account.getEmail().lower():
            transferee = account
            flag = True
+           print ("\nAccount Found\n")
            break
-       else:
-           flag = False
 
-    if flag == True:
-        print("Account Details ")
-        option = input(f"Name:{transferee.getName().capitalize()} Email: {transferee.getEmail()} \nIs this the correct account (Y/N)")
+   if flag == True:
+        option = input(f"Name:{transferee.getName().capitalize()}\nEmail: {transferee.getEmail()}\n\nIs this the correct account (Y/N)")
         if option.lower() == 'y':
             transferAmount = input("Please enter the amount you would like to send:")
+            transferAmount = int(transferAmount)
             if transferAmount >= transferor.getBalance():
                transferor.setBalance(transferor.getBalance() - transferAmount)
                transferee.setBalance(tranferee.getBalance() + transferAmount)
 
-    if option.lower != 'y':
+   if option.lower() != 'y':
         print("Thank You Please Come Again")
-    else:
+
+   else:
         print(f"Transfer Details:\nAmount Transfered:{transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\n New Balance: {transferor.getBalance()}")
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")
@@ -182,7 +182,7 @@ def loadAccounts(infile):
     accounts = []
     for line in lines:
         attributes = line.split()
-        accounts.append(Account(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5]))
+        accounts.append(Account(attributes[0],attributes[1],attributes[2], int(attributes[3]),attributes[4],attributes[5]))
 
     return accounts
 # This function loads data from a file and creates and returns a list of customers

@@ -50,7 +50,14 @@ def lowBalance(account):
     print()
 def login(accounts):
     #These variables are used to search through list of accounts and match name/email
+    flag = False
     email = input("Please enter your email: ")
+    while (flag == False):
+        if checkEmail(email) == True:
+            flag = True
+        else:
+            email = input("Invalid email, Please enter your email: ")
+
     name = input("Please enter your name: ")
 
     #carries the value of yes or no choice

@@ -71,7 +71,7 @@ def login(accounts):
     for account in accounts:
         if name.lower() == account.getName().lower() or email.lower() == account.getEmail().lower():
             choice = input ("Email: " + account.getEmail() + "\n Name: " + account.getName() + "\n is this your account (Y/N): ")
-            if choice == 'Y' or choice == 'y':
+            if choice.lower() == 'y':
                 flag = True
                 foundAccount = account
 

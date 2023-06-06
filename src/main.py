@@ -103,7 +103,7 @@ def transferFunds(transferor, accounts):
    transferAmount = 0
    flag = False
    transferEmail = input("Please enter the email of the transfer account: ")
-   tranferee = None
+   transferee = None
    option = ''
    for account in accounts:
        if transferEmail.lower() == account.getEmail().lower():
@@ -117,9 +117,11 @@ def transferFunds(transferor, accounts):
         if option.lower() == 'y':
             transferAmount = input("Please enter the amount you would like to send:")
             transferAmount = float(transferAmount)
-            if transferAmount >= transferor.getBalance():
+            if transferAmount <= transferor.getBalance():
                transferor.setBalance(transferor.getBalance() - transferAmount)
-               transferee.setBalance(tranferee.getBalance() + transferAmount)
+               transferee.setBalance(transferee.getBalance() + transferAmount)
+            else:
+                print("Insufficient Funds")
 
    if option.lower() != 'y':
         print("Thank You Please Come Again")

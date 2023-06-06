@@ -38,4 +38,4 @@ class Account:
         self.email = email
 
     def setBalance(self, balance):
-        self.balance = balance
+        self.balance = float(balance)

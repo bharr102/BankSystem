@@ -11,19 +11,25 @@ def run():
   ## checkBalance(activeAccount)
   ## transferFunds(activeAccount, accounts)
 
-  option = input ("Select one of the options below\n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit")
+  option = input ("Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
   option = int(option)
   while option != 0:
       if option == 1:
           checkBalance(activeAccount)
-      if option == 2:
+      elif option == 2:
           deposit()
-      if option == 3:
+      elif option == 3:
           withdraw()
-      if option == 4:
+      elif option == 4:
           transferFunds(activeAccount, accounts)
-      if option == 0:
+      elif option == 0:
           break
+      else:
+          print ("Invalid Choice")
+
+      option = input(
+          "Select an options \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
+      option = int(option)
   '''
   
   c2 = createCustomer()
@@ -153,7 +159,9 @@ def checkBalance(account):
 def deposit():
     print()
 
-def
+## This method adds money from the logged in accounts balance
+def withdraw():
+    print()
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements

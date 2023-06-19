@@ -1,2 +1,2 @@
-The purpose of this project is to creat a program that recreats the 
-subprocesses of a bank system
+The purpose of this project is to create a program that recreats the 
+processes of online banking and bank cards

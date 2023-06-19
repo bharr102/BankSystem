@@ -7,10 +7,23 @@ def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
   activeAccount = login(accounts)
-  checkBalance(activeAccount)
-  transferFunds(activeAccount, accounts)
 
+  ## checkBalance(activeAccount)
+  ## transferFunds(activeAccount, accounts)
 
+  option = input ("Select one of the options below\n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit")
+  option = int(option)
+  while option != 0:
+      if option == 1:
+          checkBalance(activeAccount)
+      if option == 2:
+          deposit()
+      if option == 3:
+          withdraw()
+      if option == 4:
+          transferFunds(activeAccount, accounts)
+      if option == 0:
+          break
   '''
   
   c2 = createCustomer()
@@ -57,9 +70,7 @@ def login(accounts):
             flag = True
         else:
             email = input("Invalid email, Please enter your email: ")
-
     name = input("Please enter your name: ")
-
     #carries the value of yes or no choice
     choice = ""
     flag = False
@@ -138,7 +149,11 @@ def transferFunds(transferor, accounts):
 def checkBalance(account):
     print(f"Balance: ${account.getBalance()}")
 
+## This method removes money from the logged in accounts balance
+def deposit():
+    print()
 
+def
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements

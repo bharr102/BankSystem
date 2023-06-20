@@ -23,7 +23,7 @@ def run():
       elif option == 2:
           deposit(activeAccount)
       elif option == 3:
-          withdraw()
+          withdraw(activeAccount)
       elif option == 4:
           transferFunds(activeAccount, accounts)
       elif option == 0:
@@ -174,8 +174,13 @@ def deposit(account):
 
 
 ## This method adds money from the logged in accounts balance
-def withdraw():
-    print()
+def withdraw(account):
+    pmt = input("Please Enter the Withdrawal Amount: ")
+    pmt = float(pmt)
+    print("\nWithdraw Amount ${:.2f}\nY/N".format(pmt))
+    choice = input()
+    if choice.lower() == 'y':
+        account.setBalance(account.getBalance() - pmt)
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements

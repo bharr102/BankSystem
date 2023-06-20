@@ -11,18 +11,23 @@ def run():
   ## checkBalance(activeAccount)
   ## transferFunds(activeAccount, accounts)
 
-  option = input ("Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
-  option = int(option)
-  while option != 0:
+
+
+  if activeAccount != None:
+    option = input(
+          "Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
+    option = int(option)
+    while option != 0:
       if option == 1:
           checkBalance(activeAccount)
       elif option == 2:
-          deposit()
+          deposit(activeAccount)
       elif option == 3:
           withdraw()
       elif option == 4:
           transferFunds(activeAccount, accounts)
       elif option == 0:
+          print("Thank You Please Come Again!")
           break
       else:
           print ("Invalid Choice")
@@ -30,8 +35,11 @@ def run():
       option = input(
           "Select an options \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
       option = int(option)
+  else:
+      print ("Account Not Found.\nPlease try again.")
   '''
   
+
   c2 = createCustomer()
   customers.append(c1.getName())
   print(customers)
@@ -153,11 +161,17 @@ def transferFunds(transferor, accounts):
    else:
         print(f"Transfer Details:\nAmount Transfered:${transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\nNew Balance: ${transferor.getBalance()}")
 def checkBalance(account):
-    print(f"Balance: ${account.getBalance()}")
+    print(" Account Balance: ${:.2f}\n".format(account.getBalance()))
 
 ## This method removes money from the logged in accounts balance
-def deposit():
-    print()
+def deposit(account):
+    pmt = input("Please enter Deposit Amount: ")
+    pmt = float(pmt)
+    print("\nDeposit Amount ${:.2f}\nY/N".format(pmt))
+    choice = input ()
+    if choice.lower() == 'y':
+        account.setBalance(account.getBalance() + pmt)
+
 
 ## This method adds money from the logged in accounts balance
 def withdraw():
@@ -189,7 +203,7 @@ def createAccount(customer):
 # helper function that takes in an email address and returns true if the email address meets the required format
 def checkEmail(email):
     # creating regular experesion to define a correct email address
-    emailSequence = "^[a-z0-9]+@[a-z]+\.(ca|com)$"
+    emailSequence = "^[a-zA-Z0-9]+@[a-zA-Z]+\.(ca|CA|COM|com)$"
 
     # searching email provided to the email requirements
     x = re.search(emailSequence, email)

@@ -110,7 +110,7 @@ def login(accounts):
 # Goes through all accounts and checks if name or email matches
     for account in accounts:
         if name.lower() == account.getName().lower() or email.lower() == account.getEmail().lower():
-            choice = input ("Email: " + account.getEmail() + "\n Name: " + account.getName() + "\n is this your account (Y/N): ")
+            choice = input ("Email: " + account.getEmail() + "\nName: " + account.getName().capitalize() + "\nis this your account (Y/N): ")
             if choice.lower() == 'y':
                 flag = True
                 foundAccount = account
@@ -156,7 +156,7 @@ def transferFunds(transferor, accounts):
        if transferEmail.lower() == account.getEmail().lower():
            transferee = account
            flag = True
-           print ("\nAccount Found\n")
+           print ("\nACCOUNT FOUND")
            break
 
    if flag == True:
@@ -183,7 +183,7 @@ def transferFunds(transferor, accounts):
    else:
         print(f"Transfer Details:\nAmount Transfered:${transferAmount}\nTransfer Recepient: {transferee.getName().capitalize()}\nNew Balance: ${transferor.getBalance()}")
 def checkBalance(account):
-    print(" Account Balance: ${:.2f}\n".format(account.getBalance()))
+    print("Account Balance: ${:.2f}\n".format(account.getBalance()))
 
 ## This method removes money from the logged in accounts balance
 def deposit(account):

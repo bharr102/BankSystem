@@ -322,7 +322,7 @@ def saveTranscripts(transcripts):
     sourceFile = open("transcriptions.txt", 'w')
 
     for transcript in transcripts:
-        sourceFile.write(transcript.getDate() + " " + transcript.getTime() + " " +
+        sourceFile.write(str(transcript.getDate()) + " " + str(transcript.getTime()) + " " +
         str(transcript.getAmount()) + " " + str(transcript.getEndingBalance()) + transcript.getTransType() + transcript.getEmail() + '\n')
 
 run()

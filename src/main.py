@@ -9,7 +9,7 @@ import re
 def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
-  transcripts = loadTranscripts("transcripts.txt")
+  transcripts = loadTranscripts("transcriptions.txt")
   activeAccount = login(accounts)
 
   ## checkBalance(activeAccount)
@@ -19,7 +19,7 @@ def run():
 
   if activeAccount != None:
     option = input(
-          "Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5)Show Transactions\n(0) to exit\n")
+          "Select an option \n(1) Check Balance\n(2) Deposit\n(3) Withdraw\n(4) Transfer\n(5) Show Transactions\n(0) Exit\n")
     option = int(option)
     while option != 0:
       if option == 1:
@@ -68,7 +68,7 @@ def run():
 '''
   saveAccounts(accounts)
   saveCustomers(customers)
-  saveTranscripts("transcripts.txt")
+  saveTranscripts(transcripts)
 
 # this method prompts input from customer to create a new customer instance
 def createCustomer():
@@ -88,7 +88,7 @@ def createCustomer():
 # Checks balance whenever first logged in and prints out a message if balance is low *should work with the login function
 def lowBalance(account):
     if float(account.getBalance()) < 100:
-        print ("\nLow Balance \nAccounts balance is low, deposit money to avoid potential overdraft charges")
+        print ("\nWARNING:Low Balance")
     print()
 def login(accounts):
     #These variables are used to search through list of accounts and match name/email
@@ -207,19 +207,23 @@ def deposit(account):
 def withdraw(account):
     pmt = input("Please Enter the Withdrawal Amount: ")
     pmt = float(pmt)
-    print("\nWithdraw Amount ${:.2f}\nY/N".format(pmt))
-    choice = input()
-    if choice.lower() == 'y':
-        account.setBalance(account.getBalance() - pmt)
-        account.setBalance(account.getBalance() + pmt)
-        todaysDate = date.today()
 
-        timeNow = time.localtime()
-        timeNow = time.strftime("%H:%M:%S", timeNow)
+    if account.getBalance() < pmt:
+        print("Insufficient Funds.\n")
+    else:
+        print("\nWithdraw Amount ${:.2f}\nY/N".format(pmt))
+        choice = input()
+        if choice.lower() == 'y':
+            account.setBalance(account.getBalance() - pmt)
 
-        receipt = Transcript(todaysDate, timeNow, pmt - pmt*2, account.getBalance(), "Withdraw",
+            todaysDate = date.today()
+
+            timeNow = time.localtime()
+            timeNow = time.strftime("%H:%M:%S", timeNow)
+
+            receipt = Transcript(todaysDate, timeNow, pmt - pmt*2, account.getBalance(), "Withdraw",
                              account.getEmail())
-        return receipt
+            return receipt
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements
@@ -294,7 +298,7 @@ def loadTranscripts(infile):
     Transcripts = []
     for line in lines:
         attributes = line.split()
-        Transcript.append(Transcript(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5]))
+        Transcripts.append(Transcript(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5]))
 
     return Transcripts
 
@@ -323,6 +327,6 @@ def saveTranscripts(transcripts):
 
     for transcript in transcripts:
         sourceFile.write(str(transcript.getDate()) + " " + str(transcript.getTime()) + " " +
-        str(transcript.getAmount()) + " " + str(transcript.getEndingBalance()) + transcript.getTransType() + transcript.getEmail() + '\n')
+        str(transcript.getAmount()) + " " + str(transcript.getEndingBalance()) + " " + transcript.getTransType() + " " + transcript.getEmail() + '\n')
 
 run()

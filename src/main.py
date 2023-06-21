@@ -1,11 +1,15 @@
+import time
+from datetime import date
 from Customer import Customer
 from Account import Account
+from Transcript import Transcript
 import random
 import re
 
 def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
+  transcripts = []
   activeAccount = login(accounts)
 
   ## checkBalance(activeAccount)
@@ -15,7 +19,7 @@ def run():
 
   if activeAccount != None:
     option = input(
-          "Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
+          "Select an option \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5)Show Transactions\n(0) to exit\n")
     option = int(option)
     while option != 0:
       if option == 1:
@@ -25,7 +29,15 @@ def run():
       elif option == 3:
           withdraw(activeAccount)
       elif option == 4:
-          transferFunds(activeAccount, accounts)
+         reciept = transferFunds(activeAccount, accounts)
+         transcripts.append(reciept)
+
+      elif option == 5:
+        for reciept in transcripts:
+            if reciept != None:
+                if reciept.email == activeAccount.getEmail():
+                    reciept.printReport()
+
       elif option == 0:
           print("Thank You Please Come Again!")
           break
@@ -33,7 +45,7 @@ def run():
           print ("Invalid Choice")
 
       option = input(
-          "Select an options \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5) Coming Soon...\n(0) to exit\n")
+          "Select an options \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5)Show Transactions\n(0) to exit\n")
       option = int(option)
   else:
       print ("Account Not Found.\nPlease try again.")
@@ -150,8 +162,15 @@ def transferFunds(transferor, accounts):
             transferAmount = input("Please enter the amount you would like to send:")
             transferAmount = float(transferAmount)
             if transferAmount <= transferor.getBalance():
+               todaysDate = date.today()
+               timeNow = time.localtime()
+               timeNow = time.strftime("%H:%M:%S",timeNow)
+
                transferor.setBalance(transferor.getBalance() - transferAmount)
                transferee.setBalance(transferee.getBalance() + transferAmount)
+
+               receipt = Transcript(todaysDate,timeNow,transferAmount,transferor.getBalance(), "Transfer", transferor.getEmail())
+               return receipt
             else:
                 print("Insufficient Funds")
 
@@ -181,6 +200,7 @@ def withdraw(account):
     choice = input()
     if choice.lower() == 'y':
         account.setBalance(account.getBalance() - pmt)
+        Transcript
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements

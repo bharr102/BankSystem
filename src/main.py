@@ -9,7 +9,7 @@ import re
 def run():
   customers = loadCustomers("customers.txt")
   accounts = loadAccounts("accounts.txt")
-  transcripts = []
+  transcripts = loadTranscripts("transcripts.txt")
   activeAccount = login(accounts)
 
   ## checkBalance(activeAccount)
@@ -25,9 +25,11 @@ def run():
       if option == 1:
           checkBalance(activeAccount)
       elif option == 2:
-          deposit(activeAccount)
+          depReceipt = deposit(activeAccount)
+          transcripts.append(depReceipt)
       elif option == 3:
-          withdraw(activeAccount)
+          withReciept = withdraw(activeAccount)
+          transcripts.append(withReciept)
       elif option == 4:
          reciept = transferFunds(activeAccount, accounts)
          transcripts.append(reciept)
@@ -66,6 +68,7 @@ def run():
 '''
   saveAccounts(accounts)
   saveCustomers(customers)
+  saveTranscripts("transcripts.txt")
 
 # this method prompts input from customer to create a new customer instance
 def createCustomer():
@@ -190,6 +193,14 @@ def deposit(account):
     choice = input ()
     if choice.lower() == 'y':
         account.setBalance(account.getBalance() + pmt)
+        todaysDate = date.today()
+
+        timeNow = time.localtime()
+        timeNow = time.strftime("%H:%M:%S", timeNow)
+
+        receipt = Transcript(todaysDate, timeNow, pmt, account.getBalance(), "Deposit",
+                             account.getEmail())
+        return receipt
 
 
 ## This method adds money from the logged in accounts balance
@@ -200,7 +211,15 @@ def withdraw(account):
     choice = input()
     if choice.lower() == 'y':
         account.setBalance(account.getBalance() - pmt)
-        Transcript
+        account.setBalance(account.getBalance() + pmt)
+        todaysDate = date.today()
+
+        timeNow = time.localtime()
+        timeNow = time.strftime("%H:%M:%S", timeNow)
+
+        receipt = Transcript(todaysDate, timeNow, pmt - pmt*2, account.getBalance(), "Withdraw",
+                             account.getEmail())
+        return receipt
 # This method takes in a customer and creates an account based on the occupation and age of customer
 def createAccount(customer):
     # to check if passcode meets the requirements
@@ -247,7 +266,7 @@ def checkEmail(email):
 
 #This function loads the program with bank  accounts from a specified file
 def loadAccounts(infile):
-    #infile = input("Please enter the  data files you would like to load:")
+
     sourceFile = open(infile, 'r')
     lines = sourceFile.readlines()
     accounts = []
@@ -258,7 +277,7 @@ def loadAccounts(infile):
     return accounts
 # This function loads data from a file and creates and returns a list of customers
 def loadCustomers(infile):
-    #infile = input("Please enter the  data files you would like to load:")
+
     sourceFile = open(infile, 'r')
     lines = sourceFile.readlines()
     customers = []
@@ -267,6 +286,18 @@ def loadCustomers(infile):
         customers.append(Customer(attributes[0],attributes[1],attributes[2],attributes[3]))
 
     return customers
+
+def loadTranscripts(infile):
+
+    sourceFile = open(infile, 'r')
+    lines = sourceFile.readlines()
+    Transcripts = []
+    for line in lines:
+        attributes = line.split()
+        Transcript.append(Transcript(attributes[0],attributes[1],attributes[2],attributes[3],attributes[4],attributes[5]))
+
+    return Transcripts
+
 
 # This method takes in a list of accounts, then formats and saves the list into a file
 def saveAccounts(accounts):
@@ -286,5 +317,12 @@ def saveCustomers(customers):
     for customer in customers:
         sourceFile.write(customer.getName() + " " + str(customer.getAge()) + " " +
         str(customer.getEmail()) + " " + customer.getOccupation() + '\n')
+
+def saveTranscripts(transcripts):
+    sourceFile = open("transcriptions.txt", 'w')
+
+    for transcript in transcripts:
+        sourceFile.write(transcript.getDate() + " " + transcript.getTime() + " " +
+        str(transcript.getAmount()) + " " + str(transcript.getEndingBalance()) + transcript.getTransType() + transcript.getEmail() + '\n')
 
 run()

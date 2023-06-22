@@ -31,8 +31,9 @@ def run():
           withReciept = withdraw(activeAccount)
           transcripts.append(withReciept)
       elif option == 4:
-         reciept = transferFunds(activeAccount, accounts)
+         reciept,reciept2 = transferFunds(activeAccount, accounts)
          transcripts.append(reciept)
+         transcripts.append(reciept2)
 
       elif option == 5:
         for reciept in transcripts:
@@ -172,8 +173,9 @@ def transferFunds(transferor, accounts):
                transferor.setBalance(transferor.getBalance() - transferAmount)
                transferee.setBalance(transferee.getBalance() + transferAmount)
 
-               receipt = Transcript(todaysDate,timeNow,transferAmount,transferor.getBalance(), "Transfer", transferor.getEmail())
-               return receipt
+               receipt1 = Transcript(todaysDate,timeNow,transferAmount - transferAmount * 2,transferor.getBalance(), "Transfer", transferor.getEmail())
+               receipt2 = Transcript(todaysDate,timeNow,transferAmount,transferee.getBalance(),"Transfer", transferee.getEmail())
+               return receipt1,receipt2
             else:
                 print("Insufficient Funds")
 

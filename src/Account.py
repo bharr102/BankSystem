@@ -39,3 +39,5 @@ class Account:
 
     def setBalance(self, balance):
         self.balance = float(balance)
+    def setPin (self, pin):
+        self.pin = pin

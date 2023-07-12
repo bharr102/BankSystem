@@ -1,2 +1,2 @@
-ben bharr102@mtroyal.ca 90 180.0 4795 student
+ben bharr102@mtroyal.ca 90 204.0 4795 student
 Charles cbark@mtroyal.ca 10000 997.0 1234 teacher

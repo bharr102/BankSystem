@@ -10,3 +10,4 @@
 2023-06-22 01:22:42 0.0 200.0 Withdraw bharr102@mtroyal.ca
 2023-06-22 01:22:57 -20.0 180.0 Transfer bharr102@mtroyal.ca
 2023-06-22 01:22:57 20.0 997.0 Transfer cbark@mtroyal.ca
+2023-06-28 00:07:05 24.0 204.0 Deposit bharr102@mtroyal.ca

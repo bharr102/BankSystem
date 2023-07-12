@@ -138,6 +138,19 @@ def login(accounts):
    :param account: 
    :return: 
    """
+
+def changePin(account):
+    chances = 3
+    prevPin = input ("Please enter your previous pin")
+    confirmation = ""
+    while chances > 0 and prevPin != account.getPin():
+        if prevPin == account.getPin():
+            newPin = input("Please enter your new pin:" )
+            confirmation = input ("Change pin to {} (Y/N) ".format(newPin))
+            if confirmation.lower() == 'y':
+                account.setPin(newPin)
+
+
 def transferFunds(transferor, accounts):
    """
     fail cases:

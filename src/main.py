@@ -19,7 +19,7 @@ def run():
 
   if activeAccount != None:
     option = input(
-          "Select an option \n(1) Check Balance\n(2) Deposit\n(3) Withdraw\n(4) Transfer\n(5) Show Transactions\n(0) Exit\n")
+          "Select an option \n(1) Check Balance\n(2) Deposit\n(3) Withdraw\n(4) Transfer\n(5) Show Transactions\n(6) Change Pin\n(0) Exit\n")
     option = int(option)
     while option != 0:
       if option == 1:
@@ -40,6 +40,8 @@ def run():
             if reciept != None:
                 if reciept.email == activeAccount.getEmail():
                     reciept.printReport()
+      elif option ==6:
+          changePin(activeAccount)
 
       elif option == 0:
           print("Thank You Please Come Again!")
@@ -140,15 +142,20 @@ def login(accounts):
    """
 
 def changePin(account):
+    found = False
     chances = 3
     prevPin = input ("Please enter your previous pin")
     confirmation = ""
-    while chances > 0 and prevPin != account.getPin():
+    while chances > 0 and found == False:
         if prevPin == account.getPin():
+            found = True
             newPin = input("Please enter your new pin:" )
-            confirmation = input ("Change pin to {} (Y/N) ".format(newPin))
+            confirmation = input ("\nConfirmation\nOld Pin: {}\nNew Pin: {} (Y/N) ".format(prevPin, newPin))
             if confirmation.lower() == 'y':
                 account.setPin(newPin)
+        else:
+            chances -= 1
+
 
 
 def transferFunds(transferor, accounts):

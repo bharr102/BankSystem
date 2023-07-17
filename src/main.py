@@ -50,7 +50,7 @@ def run():
           print ("Invalid Choice")
 
       option = input(
-          "Select an options \n(1) Check Balance\n(2) Deposit Money\n(3) Withdraw Money\n(4)Transfer Money\n(5)Show Transactions\n(0) to exit\n")
+          "Select an option \n(1) Check Balance\n(2) Deposit\n(3) Withdraw\n(4) Transfer\n(5) Show Transactions\n(6) Change Pin\n(0) Exit\n")
       option = int(option)
   else:
       print ("Account Not Found.\nPlease try again.")
@@ -144,17 +144,29 @@ def login(accounts):
 def changePin(account):
     found = False
     chances = 3
-    prevPin = input ("Please enter your previous pin")
+
+    valid = False
     confirmation = ""
+    # checking if pin entered was the pin for the account in the database
     while chances > 0 and found == False:
+        prevPin = input("Please enter your previous pin")
         if prevPin == account.getPin():
             found = True
-            newPin = input("Please enter your new pin:" )
-            confirmation = input ("\nConfirmation\nOld Pin: {}\nNew Pin: {} (Y/N) ".format(prevPin, newPin))
-            if confirmation.lower() == 'y':
-                account.setPin(newPin)
+            ## loop is to choose a new pin that follows the 4digit rule
+            while valid == False:
+                newPin = input("Please enter your new pin:")
+                valid = checkPin(newPin)
+                if valid == True:
+                    confirmation = input("\nConfirmation\nOld Pin: {}\nNew Pin: {} (Y/N) ".format(prevPin, newPin))
+                    if confirmation.lower() == 'y':
+                        account.setPin(newPin)
+                else:
+                    print("Invalid Pin")
+
         else:
             chances -= 1
+            print("Wrong Pin {} Attempts Left \n".format(chances))
+
 
 
 
@@ -269,6 +281,18 @@ def createAccount(customer):
         a1 = Account(customer.getName(), customer.getEmail(), customer.getOccupation(), balance,pin)
 
     return a1
+
+def checkPin(pin):
+    pinSequence = "^[0-9]{4}$"
+    valid = False
+    found = re.search(pinSequence, pin)
+
+    if found == None:
+        valid = False
+    else:
+        valid = True
+
+    return valid
 
 # helper function that takes in an email address and returns true if the email address meets the required format
 def checkEmail(email):
